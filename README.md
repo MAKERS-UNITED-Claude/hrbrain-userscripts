@@ -9,7 +9,6 @@ iPad / iPhone の Safari で [HRBrain Tripath](https://tripath.evaluation.hrbrai
 | ファイル | 種類 | 役割 |
 |---|---|---|
 | `HRBrain-Fix.js` | UserScript | 本体。レイアウト崩れの修正ロジック |
-| `tripath-test-banner.css` | UserStyle | 動作確認用のテストバナー（任意） |
 
 ## `HRBrain-Fix.js` が直すもの
 
@@ -46,7 +45,6 @@ https://raw.githubusercontent.com/MAKERS-UNITED-Claude/hrbrain-userscripts/main/
 
 - **iPad 9 世代等で、適用しても何も変わらない** → 仕様通り。元から崩れていないページでは何もしません。
 - **ミッション / 備考が小さくなりすぎる** → `HRBrain-Fix.js` 内の `capTextareaAncestors` 関数の `'200px'` / `'250px'` を好みの値に調整してください。
-- **`tripath-test-banner.css` を入れたら画面上部に赤帯が出る** → これは「userscript が効いてる」ことを確認するためのテスト用バナー。本番では disable してください。
 
 ## 開発メモ
 
