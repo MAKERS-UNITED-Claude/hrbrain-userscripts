@@ -8,7 +8,10 @@ iPad / iPhone の Safari で [HRBrain Tripath](https://tripath.evaluation.hrbrai
 
 | ファイル | 種類 | 役割 |
 |---|---|---|
-| `HRBrain-Fix.js` | UserScript | 本体。レイアウト崩れの修正ロジック |
+| `HRBrain-Loader.js` | UserScript（推奨） | GitHub から最新の `HRBrain-Fix.js` を取得して実行する薄い loader |
+| `HRBrain-Fix.js` | UserScript | 修正ロジック本体（loader が裏で取りに行く先） |
+
+**配布の運用**：エンドユーザーは `HRBrain-Loader.js` を 1 回だけ iPad にインストールします。以降は GitHub の `HRBrain-Fix.js` を更新 → push するだけで、全ユーザーに自動配布されます（次回ページ読込時から反映）。Loader は仕組み上ほぼ変更する必要がありません。
 
 ## `HRBrain-Fix.js` が直すもの
 
@@ -33,13 +36,20 @@ iPad / iPhone の Safari で [HRBrain Tripath](https://tripath.evaluation.hrbrai
 
 ### Raw URL（直接コピー用）
 
+**推奨（loader 経由・自動更新）**:
+```
+https://raw.githubusercontent.com/MAKERS-UNITED-Claude/hrbrain-userscripts/main/HRBrain-Loader.js
+```
+
+**直接インストール（手動更新）**:
 ```
 https://raw.githubusercontent.com/MAKERS-UNITED-Claude/hrbrain-userscripts/main/HRBrain-Fix.js
 ```
 
 ### 更新方法
 
-スクリプトに修正があったときは Userscripts アプリの該当スクリプトの **Update** ボタンを押すだけで最新版に置き換わります。
+- **Loader 経由でインストールしている場合**：何もしなくて OK。GitHub の `HRBrain-Fix.js` を編集して push すれば、各ユーザーの次回ページ読込時から自動的に新版が適用されます（仕組み：localStorage にキャッシュした前回コードを即実行 → 裏で最新版を fetch → 次回起動から反映）。
+- **直接インストールの場合**：raw URL から `.js` ファイルを再ダウンロードして上書きするか、Userscripts アプリ内で再インストールしてください。
 
 ## トラブルシューティング
 
