@@ -8,10 +8,10 @@ iPad / iPhone の Safari で [HRBrain Tripath](https://tripath.evaluation.hrbrai
 
 | ファイル | 種類 | 役割 |
 |---|---|---|
-| `HRBrain-Loader.js` | UserScript（推奨） | GitHub から最新の `HRBrain-Fix.js` を取得して実行する薄い loader |
+| `HRBrain-Fix-Loader.js` | UserScript（推奨） | GitHub から最新の `HRBrain-Fix.js` を取得して実行する薄い loader |
 | `HRBrain-Fix.js` | UserScript | 修正ロジック本体（loader が裏で取りに行く先） |
 
-**配布の運用**：エンドユーザーは `HRBrain-Loader.js` を 1 回だけ iPad にインストールします。以降は GitHub の `HRBrain-Fix.js` を更新 → push するだけで、全ユーザーに自動配布されます（次回ページ読込時から反映）。Loader は仕組み上ほぼ変更する必要がありません。
+**配布の運用**：エンドユーザーは `HRBrain-Fix-Loader.js` を 1 回だけ iPad にインストールします。以降は GitHub の `HRBrain-Fix.js` を更新 → push するだけで、全ユーザーに自動配布されます（次回ページ読込時から反映）。Loader は仕組み上ほぼ変更する必要がありません。
 
 ## `HRBrain-Fix.js` が直すもの
 
@@ -38,7 +38,7 @@ iPad / iPhone の Safari で [HRBrain Tripath](https://tripath.evaluation.hrbrai
 
 **推奨（loader 経由・自動更新）**:
 ```
-https://raw.githubusercontent.com/MAKERS-UNITED-Claude/hrbrain-userscripts/main/HRBrain-Loader.js
+https://raw.githubusercontent.com/MAKERS-UNITED-Claude/hrbrain-userscripts/main/HRBrain-Fix-Loader.js
 ```
 
 **直接インストール（手動更新）**:
