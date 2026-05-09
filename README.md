@@ -26,15 +26,31 @@ iPad / iPhone の Safari で [HRBrain Tripath](https://tripath.evaluation.hrbrai
 
 ## インストール手順（iPad / iPhone）
 
+### 1. Userscripts アプリの準備（初回のみ）
+
 1. App Store から **[Userscripts](https://apps.apple.com/app/userscripts/id1463298887)**（Justin Wasack 作、無料・OSS）をインストール
 2. **設定 > Safari > 機能拡張 > Userscripts** を ON
-3. Safari でこのページのファイル（例：`HRBrain-Fix.js`）を開き、「Raw」ボタンを押す
-4. URL バーの URL をコピー
-5. Userscripts アプリを開き、**「+」→「New Remote」**をタップ
-6. コピーした URL を貼り付けて保存
-7. Safari で `https://tripath.evaluation.hrbrain.jp/` にアクセス → アドレスバー左の「ぁあ」→ 機能拡張 → Userscripts でこのスクリプトを **enable**
+3. Userscripts アプリを開いて、スクリプトを置くディレクトリを設定（iCloud Drive 推奨）
 
-### Raw URL（直接コピー用）
+### 2. Loader をインストール
+
+Safari で以下の raw URL を開く：
+
+```
+https://raw.githubusercontent.com/MAKERS-UNITED-Claude/hrbrain-userscripts/main/HRBrain-Fix-Loader.js
+```
+
+ソースコードがテキスト表示されたら、**共有ボタン → 「ファイルに保存」** を押し、Userscripts のディレクトリに `HRBrain-Fix-Loader.js` という名前で保存します。
+
+> 「ファイルに保存」が出てこないときは、ページを長押し → 「すべて選択」→「コピー」してから、Userscripts アプリで「+」→「New JavaScript」を選び、ペーストして保存してください。
+
+### 3. 有効化
+
+1. Userscripts アプリを開いて `HRBrain-Fix-Loader.js` のトグルを ON（緑）
+2. Safari で `https://tripath.evaluation.hrbrain.jp/#/customize_usersheets/...` にアクセス
+3. アドレスバーの「ぁあ」→ 機能拡張 → Userscripts で**このサイトを許可**
+
+### Raw URL 一覧
 
 **推奨（loader 経由・自動更新）**:
 ```
