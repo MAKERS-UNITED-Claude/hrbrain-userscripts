@@ -16,7 +16,7 @@ iPad / iPhone の Safari で [HRBrain Tripath](https://tripath.evaluation.hrbrai
 ## `HRBrain-Fix.js` が直すもの
 
 - **シート編集ページ（`#/customize_usersheets/...`）の KPI 評価表 / スキル評価表**で、行が `100dvh`（≒1003px）に膨れ上がるバグ
-- **ミッション / 備考の textarea セクション**が画面の高さいっぱいに広がるバグ
+- **自己PR / ミッション / 備考の textarea** を内容の行数に合わせて自動リサイズ（旧版は 200px に固定キャップしていたため入力量が増えると枠からあふれる問題があった。`scrollHeight` 追従、上限 800px の安全弁付き）
 - 古い Safari の `position: sticky` 二重描画バグ
 - 1280px 固定幅レイアウトを iPad で正しく縮小フィットさせる viewport 設定
 
@@ -70,7 +70,7 @@ https://raw.githubusercontent.com/MAKERS-UNITED-Claude/hrbrain-userscripts/main/
 ## トラブルシューティング
 
 - **iPad 9 世代等で、適用しても何も変わらない** → 仕様通り。元から崩れていないページでは何もしません。
-- **ミッション / 備考が小さくなりすぎる** → `HRBrain-Fix.js` 内の `capTextareaAncestors` 関数の `'200px'` / `'250px'` を好みの値に調整してください。
+- **自己PR / ミッション / 備考の入力枠の最大サイズを変えたい** → `HRBrain-Fix.js` 内の定数 `TEXTAREA_MIN_PX` / `TEXTAREA_MAX_PX` を好みの値に調整してください（既定: min 120 / max 800）。`TEXTAREA_MAX_PX` は古い Safari のバグ由来の異常膨張を防ぐ安全弁です。
 
 ## 開発メモ
 

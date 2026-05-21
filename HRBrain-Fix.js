@@ -3,7 +3,7 @@
 // @namespace   tripath.evaluation.hrbrain.jp
 // @match       https://tripath.evaluation.hrbrain.jp/*
 // @run-at      document-start
-// @version     2.1.0
+// @version     2.2.0
 // @description 古いiPadOS Safari (iPad 6世代等) でのレイアウト崩れを修正 (customize_usersheets ページに限定)
 // ==/UserScript==
 
@@ -74,22 +74,46 @@
     }
   }
 
-  // ---- 4. ミッション/備考など textarea を含む縦長セクションを抑える -
-  // textarea を持つ要素から親を 8 段まで遡って、高さ 500〜1500px の
-  // 要素を 250px (textarea 自体は 200px) に cap する。
-  function capTextareaAncestors() {
-    document.querySelectorAll('textarea').forEach(ta => {
-      let el = ta;
-      let n = 0;
-      while (el && el !== document.body && n < 8) {
-        const r = el.getBoundingClientRect();
-        if (r.height >= 500 && r.height <= 1500) {
-          const limit = el.tagName === 'TEXTAREA' ? '200px' : '250px';
-          el.style.setProperty('max-height', limit, 'important');
-        }
-        el = el.parentElement;
-        n++;
+  // ---- 4. 自己PR/ミッション/備考の textarea を内容に合わせて自動リサイズ -
+  // 旧バージョン (v2.1) は textarea を 200px / 親を 250px に固定キャップして
+  // 「画面いっぱいに広がるバグ」を抑えていたが、入力量が増えると枠から
+  // あふれて入力しづらくなる副作用があった。
+  // 代わりに scrollHeight 追従で自然なリサイズに変更。
+  // 暴走防止のため上限 800px の安全弁を残す。
+  const TEXTAREA_MIN_PX = 120;
+  const TEXTAREA_MAX_PX = 800; // 古いSafariのバグ由来の異常膨張への安全弁
+
+  function resizeOne(ta) {
+    ta.style.setProperty('height', 'auto', 'important');
+    const target = Math.max(
+      TEXTAREA_MIN_PX,
+      Math.min(ta.scrollHeight, TEXTAREA_MAX_PX)
+    );
+    ta.style.setProperty('height', target + 'px', 'important');
+
+    // textarea を含む親8段までの固定キャップ (旧版が設定したもの含む) を解除して
+    // textarea が伸びるのに親が追従できるようにする
+    let el = ta.parentElement;
+    let n = 0;
+    while (el && el !== document.body && n < 8) {
+      if (el.style.maxHeight) {
+        el.style.removeProperty('max-height');
       }
+      el = el.parentElement;
+      n++;
+    }
+  }
+
+  function autoResizeTextareas() {
+    document.querySelectorAll('textarea').forEach(ta => {
+      if (!ta.dataset.__autoResize) {
+        ta.dataset.__autoResize = '1';
+        const handler = () => resizeOne(ta);
+        ta.addEventListener('input', handler);
+        ta.addEventListener('change', handler);
+      }
+      // 既存 textarea / 新規 textarea いずれも、現在の内容に合わせて再計算
+      resizeOne(ta);
     });
   }
 
@@ -109,7 +133,7 @@
     injectStyle();
     unstickAll();
     capBuggyGridCells();
-    capTextareaAncestors();
+    autoResizeTextareas();
   }
 
   applyAllFixes();
